@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Country;
+use App\Models\Photo;
 
 
 /*
@@ -142,10 +145,10 @@ use App\Models\Post;
 // });
 
 
-// Route::get('/create', function () {
+Route::get('/create', function () {
 
-//     Post::create(['title' => 'Method Create', 'body' => 'wow i am method created']);
-// });
+    Post::create(['title' => 'Method Create2',  'body' => 'wow i am method created2']);
+});
 
 
 // Route::get('/update', function () {
@@ -200,8 +203,121 @@ use App\Models\Post;
 
 
 
-Route::get('/forcedelete', function () {
+// Route::get('/forcedelete', function () {
 
-    Post::withTrashed()->where('is_admin',0)->forceDelete();
-    //return $post;
+//     Post::withTrashed()->where('is_admin',0)->forceDelete ();
+//     //return $post;
+// });
+
+
+
+
+//ELOQUENT Relationships
+
+
+// relationship one to one
+// Route::get('/user/{id}/post', function ($id) {
+
+//     return User::find($id)->post->title;
+// });
+
+
+// Route::get('/post/{id}/user', function ($id) {
+
+//     return Post::find($id)->user->name;
+// });
+
+
+
+// //relacionship the one to many 
+// Route::get('/posts', function () {
+
+//     $user = User::find(1);
+
+//     foreach ($user->posts as $post) {
+//         echo $post->title . "<br>";
+//     }
+// });
+
+// //many to many relationship 
+
+// Route::get('/user/{id}/role', function () {
+
+//     $user = User::find(1)->roles()->orderBy('id', 'desc')->get();
+
+//     return $user;
+//     // foreach ($user->roles as $role){
+//     //     return $role->name;
+//     // }
+
+// });
+
+//Accesing the intermediate table / pivot
+
+
+// Route::get('/user/pivot', function () {
+
+//     $user = User::find(1);
+
+//     foreach ($user->roles as $role) {
+//         echo $role->pivot->created_at;
+//     }
+// });
+
+// Route::get('/user/country', function () {
+
+//     $country = Country::find(1);
+
+//     foreach ($country->posts as $post) {
+
+//         return $post->title;
+//     }
+// });
+
+
+//polymorphic realpath
+
+
+// Route::get('/user/photos', function () {
+//     $user = User::find(3);
+//     $photoPaths = [];
+
+//     foreach ($user->photos as $photo) {
+//         $photoPaths[] = $photo->path();
+//     }
+
+//     return $photoPaths;
+// });
+
+// Route::get('/post/photos', function () {
+//     $post = Post::find(1);
+//     $photoPaths = [];
+
+//     foreach ($post->photos as $photo) {
+//         $photoPaths[] = $photo->path();
+//     }
+
+//     return $photoPaths;
+// });
+
+// Route::get('/photo/{$id}/post', function($id) {
+
+//     $photo = Photo::findOrfail($id);
+
+//     return $photo->imageable;
+
+// });
+
+
+
+Route::get('/photo/{id}/post', function ($id) {
+    $photo = Photo::findOrFail($id);
+
+    if ($photo->imageable_type === 'App\Models\Post') {
+        $post = Post::find($photo->imageable_id);
+
+        return $post;
+    } else {
+        return "La foto no está asociada a un post.";
+    }
 });

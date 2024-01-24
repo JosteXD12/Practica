@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->softDeletes();
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('role_id');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->dropColumn('deleted_at');
-        });
+        Schema::dropIfExists('role_user');
     }
 };

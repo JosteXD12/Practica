@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->softDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('country_id');
+        
         });
     }
 
@@ -22,9 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->dropColumn('deleted_at');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('country_id');
         });
     }
 };

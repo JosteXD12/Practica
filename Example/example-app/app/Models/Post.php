@@ -15,6 +15,17 @@ class Post extends Model
 
 
     protected $fillable = [
-        'title', 'body'
+        'title', 'user_id','body'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function photos(){
+        return $this->morphMany('App\Models\Photo', 'imageable');
+    }
+    
+
+
 }

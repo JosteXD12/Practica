@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->softDeletes();
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->integere('tag_id');
+            $table->integere('taggable_id');
+            $table->integere('taggable_type');
+            $table->timestamps();
         });
     }
 
@@ -22,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-            $table->dropColumn('deleted_at');
-        });
+        Schema::dropIfExists('taggables');
     }
 };
