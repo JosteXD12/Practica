@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Photo;
+use App\Models\Tag;
 
 
 /*
@@ -310,14 +311,38 @@ Route::get('/create', function () {
 
 
 
-Route::get('/photo/{id}/post', function ($id) {
-    $photo = Photo::findOrFail($id);
+// Route::get('/photo/{id}/post', function ($id) {
+//     $photo = Photo::findOrFail($id);
 
-    if ($photo->imageable_type === 'App\Models\Post') {
-        $post = Post::find($photo->imageable_id);
+//     if ($photo->imageable_type === 'App\Models\Post') {
+//         $post = Post::find($photo->imageable_id);
 
-        return $post;
-    } else {
-        return "La foto no está asociada a un post.";
+//         return $post;
+//     } else {
+//         return "La foto no está asociada a un post.";
+//     }
+// });
+
+
+// polimorfimo de muchos a muchos 
+Route::get('/post/tag', function () { 
+   
+    $post = Post::find(2);
+
+    foreach ($post -> tags as $tag) {
+       echo $tag->name; 
     }
+
 });
+
+
+// Route::get('/tag/post', function () { 
+
+//     $tag = Tag::find(1);
+
+//     return $tag -> posts;
+//     // foreach ($tag -> posts as $post) {
+//     //     echo $post->title; 
+//     //  }
+
+// });
