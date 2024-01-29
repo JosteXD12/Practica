@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Model
+class Video extends Model
 {
-
     protected $fillable = ['name'];
-    public function photos()
+    public function tags()
     {
-        return $this->morphMany('App\models\Photo', 'imageable');
+        return $this->morphToMany('App\Models\Tag', 'taggable');
     }
 }
