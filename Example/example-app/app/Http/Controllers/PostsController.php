@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 class PostsController extends Controller
 {
@@ -12,7 +16,8 @@ class PostsController extends Controller
      */
     public function index($id)
     {
-        return "its a working " . $id;
+        $post = Post::all();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -20,7 +25,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return "I am method that create ";
+        return view('posts.create');
     }
 
     /**
@@ -28,7 +33,17 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        Post::create($request->all());
+        return redirect('/posts');
+
+        // $input = $request->all();
+        // $input['title'] = $request->title;
+        // Post::create($request->all());
+
+        // $post = new Post;
+        // $post->title = $request->title;;
+        // $post->save();
     }
 
     /**
@@ -36,7 +51,8 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        return "this is a show method" . $id;
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -44,7 +60,8 @@ class PostsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -52,7 +69,10 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+
+        return redirect('/posts');
     }
 
     /**
@@ -60,21 +80,24 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::whereId($id)->delete();
+
+
+        return redirect('/posts');
     }
 
 
 
-    public function contact()
-    {
+    //     public function contact()
+    //     {
 
-        $people = ['Edward','Jose','James','Bob','Peter','Maria'];
-        return view('contact', compact('people'));
-    }
+    //         $people = ['Edward','Jose','James','Bob','Peter','Maria'];
+    //         return view('contact', compact('people'));
+    //     }
 
-    public function show_post($id,$name,$password)
-    {
-        // return view('post')->with('id',$id);
-        return view('post', compact('id', 'name', 'password'));
-    }
+    //     public function show_post($id,$name,$password)
+    //     {
+    //         // return view('post')->with('id',$id);
+    //         return view('post', compact('id', 'name', 'password'));
+    //     }
 }
