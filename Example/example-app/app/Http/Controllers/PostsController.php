@@ -38,15 +38,42 @@ class PostsController extends Controller
     public function store(CreatePostRequest $request)
     {
 
+        $input = $request->all();
+
+        if ($file = $request->file('file')) {
+            // Generate a unique filename
+            $name = uniqid() . '_' . $file->getClientOriginalName();
+
+            // Move the uploaded file to the specified directory
+            $file->move('images', $name);
+
+            // Set the 'path' attribute to the filename
+            $input['path'] = $name;
+        }
+
+
+        Post::create($input);
+
+
+        // $file = $request->file('file');
+
+        // echo "<br>";
+        // echo $file->getClientOriginalName();
+        // echo "<br>";
+        // echo $file->getSize();
+
+        // Post::create($request->all());
+        // return redirect('/posts');
+
+
+
         // $this->validate($request, [
 
         //     'title'=>'required',
-            
+
         // ]);
 
         // return $request->all();
-        Post::create($request->all());
-        return redirect('/posts');
 
         // $input = $request->all();
         // $input['title'] = $request->title;
@@ -63,12 +90,12 @@ class PostsController extends Controller
     public function show(string $id)
     {
         $post = Post::find($id);
-    
+
         if (!$post) {
             // Handle the case where the post with the given ID is not found
             abort(404);
         }
-    
+
         return view('posts.show', compact('post'));
     }
 

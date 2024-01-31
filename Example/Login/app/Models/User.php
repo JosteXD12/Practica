@@ -42,36 +42,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-
-    public function post()
-    {
-        return $this->hasOne('App\Models\Post');
-    }
-
-    public function posts()
-    {
-        return $this->hasMany('App\Models\Post');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany('App\Models\Role')->withPivot('created_at');
-    }
-
-    public function photos()
-    {
-        return $this->morphMany('App\Models\Photo', 'imageable');
-    }
-
-    public function getNameAttribute($value)
-    {
-        return ucfirst($value);
-    }
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name']= strtoupper($value);
-    }
-
-    
 }

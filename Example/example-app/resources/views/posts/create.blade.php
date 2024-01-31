@@ -7,9 +7,14 @@
 
 <!-- <form method="post"  action="/posts"> -->
 {!! Form::open(['method'=>'POST', 'route'=>'posts.store', 'enctype'=>'multipart/form-data']) !!}
+
 <div class="form-group">
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null, ['class'=>'form-control']) !!}
+</div>
+
+<div class="form-group">
+    {!! Form::file('file',['class'=>'form-control']) !!}
 
 </div>
 

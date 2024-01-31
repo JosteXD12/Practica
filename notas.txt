@@ -1,0 +1,47 @@
+==Controladores y listas===
+
+crear un modelo con una migracion:php artisan make:model "name" -m
+crear controladore:php artisan make:controller "name"
+
+crear con mas metodos:php artisan make:--resource "name"
+
+ver todos los comandos:php artisan
+
+lista de metodos o conexiones:php artisan make:list
+
+limppiar la lista:php artisa migrate
+
+==Base de datos==
+
+crear una migracion o tabla:php artisan make:migration "name(_)" --create"name"
+
+para retroceder un migracion:php artisan migrate:rollback
+
+se crea una nueva migracion pero que tenga la misma tabla como actualizaciones:php artisan make:migration add_is_admin_column_to_post_tables  --table="post"  
+
+este sirve para retroseder todas las migraciones que hallamos hecho: php artisan migrate:reset
+
+este es para eliminar todo y volverlo a cargar:php artisan migrate:refresh
+
+para ver las migraciones: php artisan migrate:status
+
+==Modelos===
+apra crearlos:php artisan make:model "name"
+
+}
+///////////////////tinker////////////////////////
+
+entrar $ php artisan tinker
+
+instalar form y html:composer require laravelcollective/html
+
+para instalar paquetes:composer require laravel/ui
+
+para generar vistas:php artisan ui bootstrap --auth
+instalar nodejs: npm install
+para correr: npm run dev  
+instalar viter:npm install --save-dev vite
+limpiar configuracion:php artisan config:clear
+
+subir el maddleware y bajarlo :php artisan up/down
+para poder mandar correos composer require guzzlehttp/guzzle

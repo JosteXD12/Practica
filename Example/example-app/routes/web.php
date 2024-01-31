@@ -10,6 +10,7 @@ use App\Models\Photo;
 use App\Models\Tag;
 use App\Http\Controllers\PostsController;
 use GuzzleHttp\Middleware;
+use Carbon\Carbon;
 
 
 /*
@@ -361,4 +362,31 @@ Route::get('/', function () {
 
 Route::group(['Middleware' => 'web'], function () {
     Route::resource('posts', PostsController::class);
+
+    Route::get('/dates', function () {
+
+        $date = new DateTime('+1 week');
+        echo $date->format('m-d-Y');
+        echo '<br>';
+
+        echo Carbon::now()->addDay(10)->diffForHumans();
+        echo '<br>';
+        echo Carbon::now()->subMonth(5)->diffForHumans();
+
+        echo '<br>';
+        echo Carbon::now()->yesterday();
+        echo '<br>';
+    });
+
+    Route::get('/getname', function () {
+        $user = User::find(1);
+        echo $user->name;
+    });
+
+    Route::get('/setname', function () {
+        $user = User::find(1);
+        $user->name = "Josue";
+        $user->save();
+        return $user;
+    });
 });
