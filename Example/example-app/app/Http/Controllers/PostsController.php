@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
+
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -9,14 +11,16 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+
+
 class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index()
     {
-        $post = Post::all();
+        $posts = Post::all();
         return view('posts.index', compact('posts'));
     }
 
@@ -31,8 +35,15 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
+
+        // $this->validate($request, [
+
+        //     'title'=>'required',
+            
+        // ]);
+
         // return $request->all();
         Post::create($request->all());
         return redirect('/posts');
@@ -51,7 +62,13 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
+    
+        if (!$post) {
+            // Handle the case where the post with the given ID is not found
+            abort(404);
+        }
+    
         return view('posts.show', compact('post'));
     }
 
