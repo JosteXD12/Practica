@@ -1,47 +1,36 @@
-==Controladores y listas===
+//Controladores y Listas://
 
-crear un modelo con una migracion:php artisan make:model "name" -m
-crear controladore:php artisan make:controller "name"
+Crear un modelo con una migración: php artisan make:model "name" -m
+Crear controlador: php artisan make:controller "name"
+Crear con más métodos: php artisan make:controller "name" --resource
+Ver todos los comandos disponibles: php artisan
+Lista de métodos o conexiones: php artisan route:list
+Limpiar la lista: php artisan migrate
 
-crear con mas metodos:php artisan make:--resource "name"
+//Base de Datos://
 
-ver todos los comandos:php artisan
+Crear una migración o tabla: php artisan make:migration "name(_)" --create "name"
+Para retroceder una migración: php artisan migrate:rollback
+Crear una nueva migración con actualizaciones en la misma tabla: php artisan make:migration "name" --table="table"
+Retroceder todas las migraciones: php artisan migrate:reset
+Eliminar todo y volver a cargar: php artisan migrate:refresh
+Ver las migraciones: php artisan migrate:status
+Modelos:
 
-lista de metodos o conexiones:php artisan make:list
+//Crearlos: php artisan make:model "name"//
+//Tinker://
 
-limppiar la lista:php artisa migrate
+Acceder: php artisan tinker
 
-==Base de datos==
 
-crear una migracion o tabla:php artisan make:migration "name(_)" --create"name"
+//Otras herramientas://
 
-para retroceder un migracion:php artisan migrate:rollback
-
-se crea una nueva migracion pero que tenga la misma tabla como actualizaciones:php artisan make:migration add_is_admin_column_to_post_tables  --table="post"  
-
-este sirve para retroseder todas las migraciones que hallamos hecho: php artisan migrate:reset
-
-este es para eliminar todo y volverlo a cargar:php artisan migrate:refresh
-
-para ver las migraciones: php artisan migrate:status
-
-==Modelos===
-apra crearlos:php artisan make:model "name"
-
-}
-///////////////////tinker////////////////////////
-
-entrar $ php artisan tinker
-
-instalar form y html:composer require laravelcollective/html
-
-para instalar paquetes:composer require laravel/ui
-
-para generar vistas:php artisan ui bootstrap --auth
-instalar nodejs: npm install
-para correr: npm run dev  
-instalar viter:npm install --save-dev vite
-limpiar configuracion:php artisan config:clear
-
-subir el maddleware y bajarlo :php artisan up/down
-para poder mandar correos composer require guzzlehttp/guzzle
+Instalar form y html: composer require laravelcollective/html
+Instalar paquetes: composer require laravel/ui
+Generar vistas: php artisan ui bootstrap --auth
+Instalar Node.js: npm install
+Para correr: npm run dev
+Instalar Vite: npm install --save-dev vite
+Limpiar configuración: php artisan config:clear
+Subir/bajar el middleware: php artisan up/down
+Para poder enviar correos: composer require guzzlehttp/guzzle
