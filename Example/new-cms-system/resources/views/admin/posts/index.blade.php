@@ -1,6 +1,12 @@
 <x-admin-master>
     @section('content')
     <h1>All Post</h1>
+    @if(session('message'))
+    <div class="alert alert-danger">{{ session('message') }}</div>
+    @elseif(session('post-created-message'))
+    <div class="alert alert-success">{{session('post-created-message')}}</div>
+    
+    @endif
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -12,6 +18,7 @@
                         <th>Image</th>
                         <th>Created At</th>
                         <th>Update At</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -22,6 +29,7 @@
                         <th>Image</th>
                         <th>Created At</th>
                         <th>Update At</th>
+                        <th>Delete</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -29,13 +37,24 @@
                     <tr>
                         <td>{{$post->id}}</td>
                         <td>{{$post->user->name}}</td>
-                        <td>{{$post->titulo}}</td>
+                        <td><a href="{{route('post.edit', $post->id)}}">{{$post->titulo}}</a></td>
                         <td>
-                            <img height="40px" src="{{ asset($post->post_image) }}" alt="">
+                            <img height="50px" src="{{ asset($post->post_image) }}" alt="">
                         </td>
                         <td>{{$post->created_at}}</td>
                         <td>{{$post->update_at}}</td>
-                       
+                        <td>
+                            {{-- @can('view', $post) --}}
+                            <form action="{{route('post.destroy', $post->id)}}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+
+                            {{-- @endcan --}}
+                        </td>
+
                     </tr>
                     @endforeach
                 </tbody>
