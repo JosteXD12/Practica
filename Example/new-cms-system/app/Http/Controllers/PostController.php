@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\flsh;
 
 class PostController extends Controller
 {
@@ -35,7 +36,7 @@ class PostController extends Controller
         $inputs = request()->validate([
             'titulo' => 'required|min:8|max:255',
             'post_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'body' => 'required' 
+            'body' => 'required'
         ]);
 
         if (request('post_image')) {
@@ -60,10 +61,36 @@ class PostController extends Controller
 
     }
 
-    public function edit(Post $post){
-     
-       
-       
+    public function edit(Post $post)
+    {
+
+
+
         return view('admin.posts.edit', ['post' => $post]);
-     }
+    }
+    public function update(Post $post)
+    {
+        $inputs = request()->validate([
+            'titulo' => 'required|min:8|max:255',
+            'post_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'body' => 'required'
+        ]);
+
+
+        if (request('post_image')) {
+            $inputs['post_image'] = request('post_image')->store('images');
+            $post->post_image = $inputs['post_image'];
+        }
+        $post->titulo = $inputs['titulo'];
+        $post->body = $inputs['body'];
+        $post->save();
+
+        //$this->authorize('update', $post);
+        session()->flash('post-updated-message', 'Post with titulo was update "' . $post->titulo . '" was updated');
+
+
+        //auth()->user()->posts()->save($post);
+
+        return redirect()->route('post.index');
+    }
 }
