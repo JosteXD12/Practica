@@ -7,11 +7,18 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+
+    public function index()
+    {
+        $posts = Post::all();
+        return view('admin.posts.index', ['posts' => $posts]);
+    }
+
     public function show(Post $post)
     {
 
 
-        return view('blog-post', ['post' => $post]);
+        return view('blog-post', ['posts' => $post]);
     }
 
     public function create()
@@ -36,6 +43,5 @@ class PostController extends Controller
         auth()->user()->posts()->create($inputs);
 
         return back();
-        
     }
 }
