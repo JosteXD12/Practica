@@ -53,7 +53,11 @@
       <div class="sidebar-heading">
         Interface
       </div>
+      
+      <x-admin-sidebar-posts-links>
 
+
+      </x-admin-sidebar-posts-links>
 
 
       <!-- Nav Item - Utilities Collapse Menu -->
