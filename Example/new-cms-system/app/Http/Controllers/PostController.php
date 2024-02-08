@@ -18,7 +18,7 @@ class PostController extends Controller
         }
     
         // Obtener los posts del usuario autenticado
-        $posts = auth()->user()->posts()->get();
+        $posts = auth()->user()->posts()->paginate(5);
     
         return view('admin.posts.index', ['posts' => $posts]);
     }
