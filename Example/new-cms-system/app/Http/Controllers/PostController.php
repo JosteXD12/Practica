@@ -12,9 +12,17 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        // Asegurarse de que el usuario esté autenticado
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+    
+        // Obtener los posts del usuario autenticado
+        $posts = auth()->user()->posts()->get();
+    
         return view('admin.posts.index', ['posts' => $posts]);
     }
+    
 
     public function show(Post $post)
     {
@@ -25,14 +33,14 @@ class PostController extends Controller
 
     public function create()
     {
-
+        $this->authorize('create',  Post::class);
 
         return view('admin.posts.create');
     }
 
     public function store()
     {
-        //$this->authorize('create',  Post::class);
+        $this->authorize('create',  Post::class);
         $inputs = request()->validate([
             'titulo' => 'required|min:8|max:255',
             'post_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -54,7 +62,7 @@ class PostController extends Controller
     public function destroy(Post $post, Request $request)
     {
 
-        //$this->authorize('delete', $post);
+        $this->authorize('delete', $post);
         $post->delete();
         $request->session()->flash('message', 'Post was deleted');
         return back();
@@ -63,11 +71,13 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-
-
-
+        $this->authorize('view', $post);
+        // if(auth()->user()->can('view',$post)){
+  
+        // }
+       
         return view('admin.posts.edit', ['post' => $post]);
-    }
+     }
     public function update(Post $post)
     {
         $inputs = request()->validate([
@@ -85,7 +95,7 @@ class PostController extends Controller
         $post->body = $inputs['body'];
         $post->save();
 
-        //$this->authorize('update', $post);
+        $this->authorize('update', $post);
         session()->flash('post-updated-message', 'Post with titulo was update "' . $post->titulo . '" was updated');
 
 
