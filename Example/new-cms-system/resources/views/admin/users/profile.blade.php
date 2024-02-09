@@ -9,7 +9,7 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <img class="img-profile rounded-circle" height="80px" src="{{ $user->avatar }}"
+                    <img class="img-profile rounded-circle" height="80px" src="https://w.wallhaven.cc/full/x6/wallhaven-x6wjkv.png"
 
                     </div>
                     <div class=" form-group">

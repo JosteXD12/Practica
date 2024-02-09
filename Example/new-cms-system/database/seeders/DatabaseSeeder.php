@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\User::factory(10)->create()
+       User::factory(100)->create()
             ->each(function ($user) {
                 $user->posts()->save(Factory::factoryForModel('App\Models\Post')->make());
             });
